@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["nodejs_22", "python3", "gcc", "gnumake"]
+
+[phases.install]
+cmds = ["npm install -g pnpm@9", "HUSKY=0 pnpm install --frozen-lockfile=false"]
+
+[phases.build]
+cmds = ["pnpm --filter @veritas-kanban/shared build", "pnpm --filter @veritas-kanban/server build", "pnpm --filter @veritas-kanban/web build"]
+
+[start]
+cmd = "node server/dist/index.js"
