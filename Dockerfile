@@ -1,5 +1,8 @@
 FROM node:22-alpine
 
+# Install build tools for native modules (bcrypt)
+RUN apk add --no-cache python3 make g++
+
 WORKDIR /app
 
 # Install pnpm
@@ -11,8 +14,8 @@ COPY shared/package.json ./shared/
 COPY server/package.json ./server/
 COPY web/package.json ./web/
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile=false
+# Install dependencies (skip husky prepare script)
+RUN HUSKY=0 pnpm install --frozen-lockfile=false
 
 # Copy source code
 COPY . .
